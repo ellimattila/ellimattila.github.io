@@ -1,0 +1,163 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #c9e2c8;
+    color: #332525;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    margin-top: 20px;
+    text-align: center;
+}
+
+nav, section, footer {
+    background-color: inherit;
+    color: inherit;
+}
+
+section {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+    flex: 1;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.nav-links {
+    display: flex;
+}
+
+.nav-links a,
+.nav-icons a {
+    text-decoration: none;
+    margin: 0 15px;
+    padding: 5px 10px;
+    color: #141212;
+}
+
+.nav-links a:hover,
+.nav-icons a:hover {
+    color: #a65fc0;
+}
+
+.nav-links a.current-page {
+    border-bottom: 2px solid #a65fc0;
+    border-radius: 0;
+}
+
+.nav-icons {
+    display: flex;
+    margin-left: auto;
+}
+
+.nav-icons a {
+    margin: 0 10px;
+    font-size: 1.5em;
+}
+
+.skills, .experience, .projects {
+    margin-top: 20px;
+}
+
+#experience, #projects {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+#experience h2, #projects h2 {
+    margin-top: 0px; /* Reduce the top margin */
+    margin-bottom: 10px; /* Reduce the bottom margin */
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #a65fc0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeInOut 3s forwards;
+    color: #fffafa;
+}
+
+h2 a {
+    color: #141212;
+    text-decoration: none;
+}
+
+h2 a:hover {
+    color: #a65fc0;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.profile-pic {
+    display: block;
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%;
+    margin: 20px auto;
+    margin-right: 20px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.links-container {
+    display: flex;
+    justify-content: center;
+}
+
+.links-container h2 {
+    margin: 0 10px;
+}
+
+.styled-link {
+    color: #216c46;
+}
