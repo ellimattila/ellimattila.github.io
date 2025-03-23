@@ -1,123 +1,328 @@
+/* Define global variables */
+:root {
+    --highlight-color: #519147;
+    --line-color: #000000;
+}
+
+/* Global Styles */
 html, body {
-    height: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    line-height: 1.8;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+    padding: 0;
+    background-color: #ecede7;
+    color: #332525;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    background-color: #c9e2c8;
-    color: #332525;
+    padding-top: 60px;
+    margin-bottom: 50px;
+    text-align: left;
+    overflow-x: hidden; /* Prevent the entire page from scrolling horizontally */
 }
 
+a {
+    font-size: 1.25em;
+    text-decoration: none;
+    color: #141212;
+}
+
+a:hover {
+    color: var(--highlight-color);
+}
+
+p, a, span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    text-align: left;
+}
+
+p {
+    font-size: 1.25em;
+    margin-bottom: 15px;
+}
+
+/* Header */
 header {
     display: flex;
-    justify-content: center;
-    padding: 20px 0;
+    justify-content: flex-start;
+    padding: 20px;
     margin-top: 20px;
-    text-align: center;
+    text-align: left;
 }
 
-nav, section, footer {
-    background-color: inherit;
-    color: inherit;
-}
-
-section {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 0 20px;
-    flex: 1;
-}
-
+/* Navigation */
 nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    background-color: #ecede7;
 }
 
-.nav-links {
+.nav-links, .nav-icons {
     display: flex;
 }
 
-.nav-links a,
-.nav-icons a {
-    text-decoration: none;
+.nav-links a, .nav-icons a {
     margin: 0 15px;
     padding: 5px 10px;
     color: #141212;
-}
-
-.nav-links a:hover,
-.nav-icons a:hover {
-    color: #a65fc0;
+    font-size: 1.25em;
 }
 
 .nav-links a.current-page {
-    border-bottom: 2px solid #a65fc0;
-    border-radius: 0;
+    color: var(--highlight-color);
 }
 
-.nav-icons {
-    display: flex;
-    margin-left: auto;
+.nav-links a:hover, .nav-icons a:hover {
+    color: var(--highlight-color);
 }
 
-.nav-icons a {
-    margin: 0 10px;
-    font-size: 1.5em;
+.nav-icons a:last-child {
+    padding-right: 50px;
 }
 
-.skills, .experience, .projects {
-    margin-top: 20px;
-}
-
-#experience, #projects {
-    max-width: 600px;
-    margin: 0 auto;
+/* Section Styles */
+section {
+    max-width: 100%;
+    margin: 40px 0;
     padding: 20px;
+    text-align: left;
+}
+
+#experience, #projects, #about-me {
+    scroll-margin-top: 100px;
+    padding-top: 50px;
+}
+
+#contact {
+    padding-bottom: 300px;
+}
+
+/* Section Titles */
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.section-title h2 {
+    margin: 0 0 40px 0;
+}
+
+.section-title::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background-color: var(--line-color);
+    transform: translateY(2px);
+}
+
+/* Typography */
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 8em;
+    font-weight: 400;
+    text-align: left;
+    margin: 400px 0 20px;
+    padding-top: 20px;
+    line-height: 1.2;
+    letter-spacing: 1px;
+}
+
+h2 {
+    font-size: 3em;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+h3, h4, h5, h6 {
+    font-size: 2em;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* About Me Section */
+.about-me {
+    margin-top: 200px;
+}
+
+.profile-picture img {
+    width: 450px;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 1%;
+}
+
+.about-me-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.introduction-text {
+    flex: 1;
+    font-size: 1.2em;
+    line-height: 1.8;
+    text-align: left;
+}
+
+/* Experience Section */
+.experience-item, .project {
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.experience-item:last-child, .project:last-child {
+    border-bottom: none;
+}
+
+.experience-item a {
+    color: var(--highlight-color);
+    font-size: inherit;
+}
+
+.experience-item a:hover {
+    color: var(--highlight-color);
+}
+
+#experience h3 {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* Projects Section */
+.project {
+    display: block; /* Ensure each project takes up the full width */
+    margin-bottom: 50px; /* Add spacing between projects */
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden; /* Clear any floated content inside */
+}
+
+.project:last-child {
+    border-bottom: none; /* Remove the bottom border for the last project */
+}
+
+.project h3, .project p {
+    margin: 10px 0;
+    text-align: left;
+}
+
+.image-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain; /* Prevent scroll chaining */
+}
+
+.image-row::-webkit-scrollbar {
+    display: none;
+}
+
+.image-container {
+    flex: 0 0 auto; /* Prevent shrinking and allow horizontal scrolling */
+    width: 400px; /* Increase the width of each image container */
     text-align: center;
 }
 
-#experience h2, #projects h2 {
-    margin-top: 0px; /* Reduce the top margin */
-    margin-bottom: 10px; /* Reduce the bottom margin */
+.image-container img {
+    width: 100%; /* Ensure the image fits within the container */
+    height: auto; /* Maintain the aspect ratio */
+    border-radius: 5px;
 }
 
+.image-description {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #555;
+    text-align: center; /* Center-align the text under the image */
+    display: block; /* Ensure the description is displayed as a block element */
+    overflow: visible; /* Ensure text is not clipped */
+    word-wrap: break-word; /* Ensure long text wraps properly */
+}
+
+.image-row-wrapper {
+    position: relative; /* Position the wrapper to contain the arrow */
+}
+
+.scroll-arrow {
+    position: absolute;
+    top: 45%; /* Move the arrow slightly up (adjusted from 50%) */
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    width: 40px; /* Set width to make it square */
+    height: 40px; /* Set height to match width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0; /* Ensure the corners are square */
+}
+
+.right-arrow {
+    right: 10px; /* Position the right arrow */
+}
+
+/* Contact Section */
+.contact-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-icons a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.contact-icons a:hover .copy-icon {
+    filter: brightness(0) saturate(100%) invert(37%) sepia(50%) saturate(800%) hue-rotate(85deg) brightness(80%) contrast(90%);
+}
+
+/* Footer */
 footer {
     text-align: center;
-    padding: 10px 0;
+    padding: 5px 40px;
     width: 100%;
-    position: fixed;
+    position: relative;
     bottom: 0;
+    background-color: #ecede7;
+    color: #332525;
+    font-size: 0.9em;
 }
 
+/* Animations */
 .notification {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #a65fc0;
-    padding: 10px 20px;
-    border-radius: 5px;
+    background-color: var(--highlight-color);
+    border-radius: 1px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     opacity: 0;
     animation: fadeInOut 3s forwards;
     color: #fffafa;
-}
-
-h2 a {
-    color: #141212;
-    text-decoration: none;
-}
-
-h2 a:hover {
-    color: #a65fc0;
+    padding: 15px 25px;
 }
 
 @keyframes fadeInOut {
@@ -127,37 +332,98 @@ h2 a:hover {
     100% { opacity: 0; }
 }
 
-.profile-pic {
+/* Welcome Text */
+.welcome-text {
+    font-size: 2em;
+    font-style: italic;
+    text-align: left;
+    margin-top: 20px;
+    padding-bottom: 100px;
+}
+
+.copy-icon, .new-tab-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+.new-tab-icon {
+    margin-left: 5px;
+    filter: brightness(0) saturate(100%) invert(37%) sepia(50%) saturate(800%) hue-rotate(85deg) brightness(80%) contrast(90%);
+}
+/* Lightbox styles */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.lightbox-content {
     display: block;
-    max-width: 150px;
-    height: auto;
-    border-radius: 50%;
-    margin: 20px auto;
-    margin-right: 20px;
+    margin: auto;
+    max-width: 80%;
+    max-height: 80%;
+    animation: zoomIn 0.3s;
 }
 
-.header-content {
+@keyframes zoomIn {
+    from {transform: scale(0.8);}
+    to {transform: scale(1);}
+}
+
+.close-lightbox {
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    font-size: 40px;
+    color: white;
+    padding: 16px;
+    user-select: none;
+    transform: translateY(-50%);
+}
+
+.prev { left: 30px; }
+.next { right: 30px; }
+
+.scrollable-image {
+    cursor: pointer;
+}
+
+.scroll-arrow {
+    position: absolute;
+    top: 35%; /* Move the arrow slightly up (adjusted from 50%) */
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    width: 40px; /* Set width to make it square */
+    height: 40px; /* Set height to match width */
     display: flex;
+    justify-content: center;
     align-items: center;
-    text-align: center;
+    border-radius: 0; /* Ensure the corners are square */
 }
 
-.header-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-}
-
-.links-container {
-    display: flex;
-    justify-content: center;
-}
-
-.links-container h2 {
-    margin: 0 10px;
-}
-
-.styled-link {
-    color: #216c46;
+.right-arrow {
+    right: 10px; /* Position the right arrow */
 }
