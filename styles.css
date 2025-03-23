@@ -1,4 +1,4 @@
-/* Define global variables */
+/* Root Variables */
 :root {
     --highlight-color: #519147;
     --line-color: #000000;
@@ -7,8 +7,8 @@
 /* Global Styles */
 html, body {
     font-family: 'Inter', sans-serif;
-    font-size: 18px;
-    line-height: 1.8;
+    font-size: 16px;
+    line-height: 1.6;
     margin: 0;
     padding: 0;
     background-color: #ecede7;
@@ -21,7 +21,7 @@ body {
     padding-top: 60px;
     margin-bottom: 50px;
     text-align: left;
-    overflow-x: hidden; /* Prevent the entire page from scrolling horizontally */
+    overflow-x: hidden;
 }
 
 a {
@@ -45,7 +45,7 @@ p {
     margin-bottom: 15px;
 }
 
-/* Header */
+/* Header and Navigation */
 header {
     display: flex;
     justify-content: flex-start;
@@ -54,7 +54,6 @@ header {
     text-align: left;
 }
 
-/* Navigation */
 nav {
     position: fixed;
     top: 0;
@@ -108,7 +107,6 @@ section {
     padding-bottom: 300px;
 }
 
-/* Section Titles */
 .section-title {
     display: flex;
     align-items: center;
@@ -176,7 +174,7 @@ h3, h4, h5, h6 {
     text-align: left;
 }
 
-/* Experience Section */
+/* Experience and Projects */
 .experience-item, .project {
     margin-bottom: 50px;
     padding-bottom: 20px;
@@ -202,17 +200,16 @@ h3, h4, h5, h6 {
     margin-bottom: 10px;
 }
 
-/* Projects Section */
 .project {
-    display: block; /* Ensure each project takes up the full width */
-    margin-bottom: 50px; /* Add spacing between projects */
+    display: block;
+    margin-bottom: 50px;
     padding-bottom: 20px;
     border-bottom: 1px solid #ddd;
-    overflow: hidden; /* Clear any floated content inside */
+    overflow: hidden;
 }
 
 .project:last-child {
-    border-bottom: none; /* Remove the bottom border for the last project */
+    border-bottom: none;
 }
 
 .project h3, .project p {
@@ -220,13 +217,18 @@ h3, h4, h5, h6 {
     text-align: left;
 }
 
+.project p {
+    max-width: 800px;
+}
+
+/* Image Rows and Containers */
 .image-row {
     display: flex;
     overflow-x: auto;
     gap: 20px;
     padding-bottom: 10px;
     scrollbar-width: none;
-    overscroll-behavior-x: contain; /* Prevent scroll chaining */
+    overscroll-behavior-x: contain;
 }
 
 .image-row::-webkit-scrollbar {
@@ -234,14 +236,28 @@ h3, h4, h5, h6 {
 }
 
 .image-container {
-    flex: 0 0 auto; /* Prevent shrinking and allow horizontal scrolling */
-    width: 400px; /* Increase the width of each image container */
+    display: inline-block;
     text-align: center;
+    margin: 10px;
 }
 
 .image-container img {
-    width: 100%; /* Ensure the image fits within the container */
-    height: auto; /* Maintain the aspect ratio */
+    width: auto;
+    height: 400px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.image-container-small {
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+}
+
+.image-container-small img {
+    width: auto;
+    height: 100px;
+    object-fit: contain;
     border-radius: 5px;
 }
 
@@ -249,109 +265,17 @@ h3, h4, h5, h6 {
     margin-top: 10px;
     font-size: 0.9em;
     color: #555;
-    text-align: center; /* Center-align the text under the image */
-    display: block; /* Ensure the description is displayed as a block element */
-    overflow: visible; /* Ensure text is not clipped */
-    word-wrap: break-word; /* Ensure long text wraps properly */
+    text-align: center;
+    display: block;
+    overflow: visible;
+    word-wrap: break-word;
 }
 
 .image-row-wrapper {
-    position: relative; /* Position the wrapper to contain the arrow */
-}
-
-.scroll-arrow {
-    position: absolute;
-    top: 45%; /* Move the arrow slightly up (adjusted from 50%) */
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 1000;
-    width: 40px; /* Set width to make it square */
-    height: 40px; /* Set height to match width */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0; /* Ensure the corners are square */
-}
-
-.right-arrow {
-    right: 10px; /* Position the right arrow */
-}
-
-/* Contact Section */
-.contact-icons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.contact-icons a {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.contact-icons a:hover .copy-icon {
-    filter: brightness(0) saturate(100%) invert(37%) sepia(50%) saturate(800%) hue-rotate(85deg) brightness(80%) contrast(90%);
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 5px 40px;
-    width: 100%;
     position: relative;
-    bottom: 0;
-    background-color: #ecede7;
-    color: #332525;
-    font-size: 0.9em;
 }
 
-/* Animations */
-.notification {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: var(--highlight-color);
-    border-radius: 1px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    opacity: 0;
-    animation: fadeInOut 3s forwards;
-    color: #fffafa;
-    padding: 15px 25px;
-}
-
-@keyframes fadeInOut {
-    0% { opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { opacity: 0; }
-}
-
-/* Welcome Text */
-.welcome-text {
-    font-size: 2em;
-    font-style: italic;
-    text-align: left;
-    margin-top: 20px;
-    padding-bottom: 100px;
-}
-
-.copy-icon, .new-tab-icon {
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-}
-
-.new-tab-icon {
-    margin-left: 5px;
-    filter: brightness(0) saturate(100%) invert(37%) sepia(50%) saturate(800%) hue-rotate(85deg) brightness(80%) contrast(90%);
-}
-/* Lightbox styles */
+/* Lightbox */
 .lightbox {
     display: none;
     position: fixed;
@@ -366,11 +290,13 @@ footer {
 }
 
 .lightbox-content {
-    display: block;
-    margin: auto;
     max-width: 80%;
     max-height: 80%;
-    animation: zoomIn 0.3s;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
 }
 
 @keyframes zoomIn {
@@ -402,28 +328,200 @@ footer {
 .prev { left: 30px; }
 .next { right: 30px; }
 
-.scrollable-image {
-    cursor: pointer;
+/* Icon Styling and Sizing */
+.copy-icon, .new-tab-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
 }
 
+.contact-icons a:hover .copy-icon {
+    filter: brightness(0) saturate(100%) invert(37%) sepia(50%) saturate(800%) hue-rotate(85deg) brightness(80%) contrast(90%);
+    color: var(--highlight-color);
+}
+
+.new-tab-icon {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    filter: brightness(0) saturate(100%) invert(37%) sepia(50%) saturate(800%) hue-rotate(85deg) brightness(80%) contrast(90%);
+}
+
+/* Buttons and Arrows */
 .scroll-arrow {
+    display: none;
     position: absolute;
-    top: 35%; /* Move the arrow slightly up (adjusted from 50%) */
+    top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
     font-size: 24px;
     cursor: pointer;
     z-index: 1000;
-    width: 40px; /* Set width to make it square */
-    height: 40px; /* Set height to match width */
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 0; /* Ensure the corners are square */
+    border-radius: 0;
+}
+
+.left-arrow {
+    left: 10px;
 }
 
 .right-arrow {
-    right: 10px; /* Position the right arrow */
+    right: 10px;
+}
+
+/* Utility Classes */
+.pixelated {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    width: 80%;
+    max-width: 100px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.small-image {
+    width: 50%;
+    max-width: 40px;
+    height: auto;
+    margin: 0 auto;
+}
+
+/* Vertical Scrollbars */
+.vertical-scroll {
+    flex: 0 0 auto;
+    width: 400px;
+    height: 400px;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.vertical-scroll img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.vertical-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.vertical-scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+.vertical-scroll::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.wrapped-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Contact Icons */
+.contact-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-icons a {
+    display: block;
+    text-align: left;
+    padding: 5px 0;
+}
+
+/* Hero Section (First Page) */
+#hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    background-color: #ecede7;
+    padding: 0 20px;
+}
+
+#hero h1 {
+    font-size: 8em;
+    margin: 0;
+}
+
+#hero p {
+    font-size: 2em;
+    margin: 10px 0 0;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em;
+    color: #555;
+    opacity: 0;
+    animation: fadeInOut 5s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Notification Styling */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--highlight-color);
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeInOut 3s forwards;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
 }

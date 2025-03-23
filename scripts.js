@@ -1,5 +1,5 @@
+// Email Copy Functionality
 document.addEventListener("DOMContentLoaded", function () {
-  // Add click event for the email link in the navigation bar
   document
     .getElementById("copy-email")
     .addEventListener("click", function (event) {
@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
       copyEmail("elli.mattila@gmail.com");
     });
 
-  // Add click event for the email link in the Contact section
   document
     .getElementById("copy-email-contact")
     .addEventListener("click", function (event) {
@@ -15,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
       copyEmail("elli.mattila@gmail.com");
     });
 
-  // Function to copy email and show notification
   function copyEmail(email) {
     navigator.clipboard.writeText(email).then(
       function () {
@@ -27,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
-  // Function to show notification
   function showNotification(message) {
     const notification = document.createElement("div");
     notification.className = "notification";
@@ -35,16 +32,16 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.appendChild(notification);
     setTimeout(function () {
       notification.remove();
-    }, 3000); // Remove after 3 seconds
+    }, 3000);
   }
 
+  // Navigation Highlighting
   const sections = document.querySelectorAll("section");
   const navLinks = document.querySelectorAll(".nav-links a");
 
   window.addEventListener("scroll", () => {
     let current = "";
 
-    // Check the current scroll position and determine the active section
     sections.forEach((section) => {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.clientHeight;
@@ -53,12 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // Remove the 'current-page' class from all links
     navLinks.forEach((link) => {
       link.classList.remove("current-page");
     });
 
-    // Add the 'current-page' class to the active link
     if (current) {
       const activeLink = document.querySelector(
         `.nav-links a[href="#${current}"]`
@@ -68,54 +63,124 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   });
-  // Lightbox functionality
+
+  // Lightbox Functionality
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
   const closeBtn = document.querySelector(".close-lightbox");
   const prevBtn = document.querySelector(".prev");
   const nextBtn = document.querySelector(".next");
-  const scrollableImages = document.querySelectorAll(".scrollable-image");
+  const projects = document.querySelectorAll(".project");
 
+  let currentImages = [];
   let currentIndex = 0;
-  let images = Array.from(scrollableImages);
 
-  // Show lightbox
-  images.forEach((img, index) => {
-    img.addEventListener("click", () => {
-      lightbox.style.display = "block";
-      lightboxImg.src = img.src;
-      currentIndex = index;
+  projects.forEach((project) => {
+    const images = Array.from(project.querySelectorAll(".scrollable-image"));
+
+    images.forEach((img, index) => {
+      img.addEventListener("click", () => {
+        currentImages = images;
+        currentIndex = index;
+        lightbox.style.display = "block";
+        lightboxImg.src = img.src;
+      });
     });
   });
 
-  // Close lightbox
-  closeBtn.onclick = () => {
+  closeBtn.addEventListener("click", () => {
     lightbox.style.display = "none";
+  });
+
+  const showNextImage = () => {
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    lightboxImg.src = currentImages[currentIndex].src;
   };
 
-  // Navigate
-  nextBtn.onclick = () => {
-    currentIndex = (currentIndex + 1) % images.length;
-    lightboxImg.src = images[currentIndex].src;
+  const showPrevImage = () => {
+    currentIndex =
+      (currentIndex - 1 + currentImages.length) % currentImages.length;
+    lightboxImg.src = currentImages[currentIndex].src;
   };
 
-  prevBtn.onclick = () => {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    lightboxImg.src = images[currentIndex].src;
-  };
+  nextBtn.addEventListener("click", showNextImage);
+  prevBtn.addEventListener("click", showPrevImage);
 
-  // Close on background click
   lightbox.addEventListener("click", (e) => {
     if (e.target === lightbox) {
       lightbox.style.display = "none";
     }
   });
 
-  const imageRow = document.querySelector(".image-row");
-  const rightArrow = document.querySelector(".right-arrow");
-
-  // Scroll to the right when the right arrow is clicked
-  rightArrow.addEventListener("click", () => {
-    imageRow.scrollBy({ left: 300, behavior: "smooth" }); // Scroll 300px to the right
+  document.addEventListener("keydown", (e) => {
+    if (lightbox.style.display === "block") {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        showNextImage();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        showPrevImage();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        lightbox.style.display = "none";
+      }
+    }
   });
+
+  // Image Row Scrolling
+  projects.forEach((project) => {
+    const imageRow = project.querySelector(".image-row");
+    const leftArrow = project.querySelector(".left-arrow");
+    const rightArrow = project.querySelector(".right-arrow");
+
+    if (imageRow && leftArrow && rightArrow) {
+      const updateArrowVisibility = () => {
+        const isScrollable = imageRow.scrollWidth > imageRow.clientWidth;
+        const isAtStart = imageRow.scrollLeft === 0;
+        const isAtEnd =
+          imageRow.scrollLeft + imageRow.clientWidth >= imageRow.scrollWidth;
+
+        if (isScrollable && !isAtStart) {
+          leftArrow.style.display = "flex";
+        } else {
+          leftArrow.style.display = "none";
+        }
+
+        if (isScrollable && !isAtEnd) {
+          rightArrow.style.display = "flex";
+        } else {
+          rightArrow.style.display = "none";
+        }
+      };
+
+      updateArrowVisibility();
+      imageRow.addEventListener("scroll", updateArrowVisibility);
+      window.addEventListener("resize", updateArrowVisibility);
+
+      leftArrow.addEventListener("click", () => {
+        imageRow.scrollBy({
+          left: -300,
+          behavior: "smooth",
+        });
+      });
+
+      rightArrow.addEventListener("click", () => {
+        imageRow.scrollBy({
+          left: 300,
+          behavior: "smooth",
+        });
+      });
+    }
+  });
+
+  // Scroll Indicator
+  const scrollIndicator = document.getElementById("scroll-indicator");
+
+  setTimeout(() => {
+    scrollIndicator.style.opacity = "1";
+  }, 4000);
+
+  setTimeout(() => {
+    scrollIndicator.style.opacity = "0";
+  }, 7000);
 });
