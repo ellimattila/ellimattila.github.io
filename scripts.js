@@ -66,49 +66,86 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Lightbox Functionality
   const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
   const closeBtn = document.querySelector(".close-lightbox");
   const prevBtn = document.querySelector(".prev");
   const nextBtn = document.querySelector(".next");
   const projects = document.querySelectorAll(".project");
 
-  let currentImages = [];
+  let currentMedia = [];
   let currentIndex = 0;
 
   projects.forEach((project) => {
-    const images = Array.from(project.querySelectorAll(".scrollable-image"));
+    const mediaItems = Array.from(
+      project.querySelectorAll("img.project-image, video.project-video")
+    );
 
-    images.forEach((img, index) => {
-      img.addEventListener("click", () => {
-        currentImages = images;
+    mediaItems.forEach((item, index) => {
+      item.addEventListener("click", () => {
+        currentMedia = mediaItems;
         currentIndex = index;
-        lightbox.style.display = "block";
-        lightboxImg.src = img.src;
+        showLightbox(item);
       });
     });
   });
 
+  function showLightbox(item) {
+    lightbox.style.display = "block";
+    const isVideo = item.tagName.toLowerCase() === "video";
+
+    const oldContent = lightbox.querySelector(".lightbox-content");
+    if (oldContent) oldContent.remove();
+
+    const newContent = isVideo
+      ? createLightboxVideo(item.src)
+      : createLightboxImage(item.src);
+
+    lightbox.appendChild(newContent);
+  }
+
+  function createLightboxImage(src) {
+    const img = document.createElement("img");
+    img.className = "lightbox-content";
+    img.src = src;
+    return img;
+  }
+
+  function createLightboxVideo(src) {
+    const video = document.createElement("video");
+    video.src = src;
+    video.controls = true;
+    video.autoplay = true;
+    video.className = "lightbox-content";
+    return video;
+  }
+
+  function showNextMedia() {
+    currentIndex = (currentIndex + 1) % currentMedia.length;
+    showLightbox(currentMedia[currentIndex]);
+  }
+
+  function showPrevMedia() {
+    currentIndex =
+      (currentIndex - 1 + currentMedia.length) % currentMedia.length;
+    showLightbox(currentMedia[currentIndex]);
+  }
+
+  function stopLightboxVideo() {
+    const video = lightbox.querySelector("video.lightbox-content");
+    if (video) video.pause();
+  }
+
   closeBtn.addEventListener("click", () => {
     lightbox.style.display = "none";
+    stopLightboxVideo();
   });
 
-  const showNextImage = () => {
-    currentIndex = (currentIndex + 1) % currentImages.length;
-    lightboxImg.src = currentImages[currentIndex].src;
-  };
-
-  const showPrevImage = () => {
-    currentIndex =
-      (currentIndex - 1 + currentImages.length) % currentImages.length;
-    lightboxImg.src = currentImages[currentIndex].src;
-  };
-
-  nextBtn.addEventListener("click", showNextImage);
-  prevBtn.addEventListener("click", showPrevImage);
+  nextBtn.addEventListener("click", showNextMedia);
+  prevBtn.addEventListener("click", showPrevMedia);
 
   lightbox.addEventListener("click", (e) => {
     if (e.target === lightbox) {
       lightbox.style.display = "none";
+      stopLightboxVideo();
     }
   });
 
@@ -116,13 +153,14 @@ document.addEventListener("DOMContentLoaded", function () {
     if (lightbox.style.display === "block") {
       if (e.key === "ArrowRight") {
         e.preventDefault();
-        showNextImage();
+        showNextMedia();
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
-        showPrevImage();
+        showPrevMedia();
       } else if (e.key === "Escape") {
         e.preventDefault();
         lightbox.style.display = "none";
+        stopLightboxVideo();
       }
     }
   });
@@ -175,12 +213,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Scroll Indicator
   const scrollIndicator = document.getElementById("scroll-indicator");
+  let scrollIndicatorTimeout;
 
-  setTimeout(() => {
+  scrollIndicatorTimeout = setTimeout(() => {
     scrollIndicator.style.opacity = "1";
-  }, 4000);
+  }, 6000);
 
-  setTimeout(() => {
+  window.addEventListener("scroll", () => {
+    clearTimeout(scrollIndicatorTimeout);
     scrollIndicator.style.opacity = "0";
-  }, 7000);
+  });
 });

@@ -221,6 +221,19 @@ h3, h4, h5, h6 {
     max-width: 800px;
 }
 
+.project-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.project-video {
+    height: 400px;
+    border-radius: 5px;
+    object-fit: contain;
+}
+
 /* Image Rows and Containers */
 .image-row {
     display: flex;
@@ -473,7 +486,7 @@ h3, h4, h5, h6 {
     font-size: 1.2em;
     color: #555;
     opacity: 0;
-    animation: fadeInOut 5s ease-in-out forwards;
+    transition: opacity 0.5s ease;
 }
 
 @keyframes fadeInOut {
