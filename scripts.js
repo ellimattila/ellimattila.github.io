@@ -35,6 +35,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 3000);
   }
 
+  // Hamburger toggle
+  const hamburger = document.getElementById("hamburger");
+  const navContent = document.querySelector(".nav-content");
+  const currentPageLabel = document.getElementById("current-page-label");
+
+  hamburger.addEventListener("click", () => {
+    navContent.classList.toggle("open");
+  });
+
+  // Update current page label
+  const updateCurrentPageLabel = () => {
+    const current = document.querySelector(".nav-links a.current-page");
+    if (current && currentPageLabel) {
+      currentPageLabel.textContent = current.textContent;
+    }
+  };
+
+  window.addEventListener("scroll", updateCurrentPageLabel);
+  updateCurrentPageLabel();
+
   // Navigation Highlighting
   const sections = document.querySelectorAll("section");
   const navLinks = document.querySelectorAll(".nav-links a");
@@ -45,7 +65,10 @@ document.addEventListener("DOMContentLoaded", function () {
     sections.forEach((section) => {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.clientHeight;
-      if (window.scrollY >= sectionTop - sectionHeight / 3) {
+      if (
+        scrollY >= sectionTop - 150 &&
+        scrollY < sectionTop + sectionHeight - 150
+      ) {
         current = section.getAttribute("id");
       }
     });
