@@ -1,18 +1,32 @@
-// Email Copy Functionality
-document.addEventListener("DOMContentLoaded", function () {
-  document
-    .getElementById("copy-email")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
-      copyEmail("elli.mattila@gmail.com");
-    });
+// Load includes, then initialize features
+function loadIncludes() {
+  const app = document.getElementById("app");
+  const files = [
+    "includes/header.html",
+    "includes/about.html",
+    "includes/experience.html",
+    "includes/projects.html",
+    "includes/contact.html",
+  ];
+  return files.reduce((p, file) => {
+    return p
+      .then(() => fetch(file))
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to load ${file}`);
+        return res.text();
+      })
+      .then((html) => {
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = html;
+        Array.from(wrapper.childNodes).forEach((node) => app.appendChild(node));
+      });
+  }, Promise.resolve());
+}
 
-  document
-    .getElementById("copy-email-contact")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
-      copyEmail("elli.mattila@gmail.com");
-    });
+function initializeFeatures() {
+  // Email Copy Functionality
+  const copyEmailBtn = document.getElementById("copy-email");
+  const copyEmailContactBtn = document.getElementById("copy-email-contact");
 
   function copyEmail(email) {
     navigator.clipboard.writeText(email).then(
@@ -35,14 +49,30 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 3000);
   }
 
+  if (copyEmailBtn) {
+    copyEmailBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      copyEmail("elli.mattila@gmail.com");
+    });
+  }
+
+  if (copyEmailContactBtn) {
+    copyEmailContactBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      copyEmail("elli.mattila@gmail.com");
+    });
+  }
+
   // Hamburger toggle
   const hamburger = document.getElementById("hamburger");
   const navContent = document.querySelector(".nav-content");
   const currentPageLabel = document.getElementById("current-page-label");
 
-  hamburger.addEventListener("click", () => {
-    navContent.classList.toggle("open");
-  });
+  if (hamburger && navContent) {
+    hamburger.addEventListener("click", () => {
+      navContent.classList.toggle("open");
+    });
+  }
 
   // Update current page label
   const updateCurrentPageLabel = () => {
@@ -112,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function showLightbox(item) {
+    if (!lightbox) return;
     lightbox.style.display = "block";
     const isVideo = item.tagName.toLowerCase() === "video";
 
@@ -153,27 +184,32 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function stopLightboxVideo() {
+    if (!lightbox) return;
     const video = lightbox.querySelector("video.lightbox-content");
     if (video) video.pause();
   }
 
-  closeBtn.addEventListener("click", () => {
-    lightbox.style.display = "none";
-    stopLightboxVideo();
-  });
-
-  nextBtn.addEventListener("click", showNextMedia);
-  prevBtn.addEventListener("click", showPrevMedia);
-
-  lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) {
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
       lightbox.style.display = "none";
       stopLightboxVideo();
-    }
-  });
+    });
+  }
+
+  if (nextBtn) nextBtn.addEventListener("click", showNextMedia);
+  if (prevBtn) prevBtn.addEventListener("click", showPrevMedia);
+
+  if (lightbox) {
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) {
+        lightbox.style.display = "none";
+        stopLightboxVideo();
+      }
+    });
+  }
 
   document.addEventListener("keydown", (e) => {
-    if (lightbox.style.display === "block") {
+    if (lightbox && lightbox.style.display === "block") {
       if (e.key === "ArrowRight") {
         e.preventDefault();
         showNextMedia();
@@ -238,12 +274,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const scrollIndicator = document.getElementById("scroll-indicator");
   let scrollIndicatorTimeout;
 
-  scrollIndicatorTimeout = setTimeout(() => {
-    scrollIndicator.style.opacity = "1";
-  }, 6000);
+  if (scrollIndicator) {
+    scrollIndicatorTimeout = setTimeout(() => {
+      scrollIndicator.style.opacity = "1";
+    }, 1000);
 
-  window.addEventListener("scroll", () => {
-    clearTimeout(scrollIndicatorTimeout);
-    scrollIndicator.style.opacity = "0";
-  });
+    window.addEventListener("scroll", () => {
+      clearTimeout(scrollIndicatorTimeout);
+      scrollIndicator.style.opacity = "0";
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  loadIncludes()
+    .then(() => initializeFeatures())
+    .catch((err) => console.error(err));
 });
